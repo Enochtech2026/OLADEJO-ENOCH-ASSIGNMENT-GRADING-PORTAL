@@ -1,0 +1,15 @@
+{
+  "name": "assignment-submission-portal",
+  "version": "2.1.0",
+  "description": "University assignment submission and grading portal with a Node.js/libSQL backend (local file or free Turso cloud database).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.4"
+  }
+}

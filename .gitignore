@@ -1,0 +1,16 @@
+# Database (contains user accounts, password hashes, and submissions)
+data/portal.db
+data/portal.db-shm
+data/portal.db-wal
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+*.log
+
+# npm dependencies (run `npm install` to restore — see README)
+node_modules/
+package-lock.json
+
+# Environment secrets (Turso credentials, etc.) — never commit these
+.env

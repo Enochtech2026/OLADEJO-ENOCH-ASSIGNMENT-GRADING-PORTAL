@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Submission Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-title-row">
+                <div class="crest" aria-hidden="true">ASP</div>
+                <div>
+                    <h1>Assignment Submission Portal</h1>
+                    <p>Submit your coursework, let lecturers grade it, and review results quickly.</p>
+                </div>
+            </div>
+            <nav class="top-nav hidden">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#student-panel" id="studentNavLink" class="nav-link">Student</a>
+                <a href="#lecturer-panel" id="lecturerNavLink" class="nav-link">Lecturer</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Authentication Section -->
+    <section id="loginSection" class="login-section">
+        <div class="login-card card">
+            <div class="login-switch">
+                <button id="showLoginBtn" class="tab-button active" type="button">Login</button>
+                <button id="showRegisterBtn" class="tab-button" type="button">Register</button>
+            </div>
+
+            <div id="loginView">
+                <h2>Login to continue</h2>
+                <p>Use your registered email and password.</p>
+                <form id="loginForm">
+                    <div class="form-row login-field">
+                        <label for="loginEmail">Email</label>
+                        <input id="loginEmail" type="email" placeholder="student@university.edu" required>
+                    </div>
+                    <div class="form-row login-field">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-wrap">
+                            <input id="loginPassword" type="password" placeholder="Enter password" required>
+                            <button type="button" class="password-toggle" data-target="loginPassword" aria-label="Show password">Show</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-button">Login</button>
+                </form>
+            </div>
+
+            <div id="registerView" class="hidden">
+                <h2>Create a new account</h2>
+                <p id="registerHint">Register with your full name, email, password, and role. Note: the very first account created on this portal automatically becomes the Administrator.</p>
+                <form id="registerForm">
+                    <div class="form-row login-field">
+                        <label for="registerName">Full Name</label>
+                        <input id="registerName" type="text" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-row login-field">
+                        <label for="registerEmail">Email</label>
+                        <input id="registerEmail" type="email" placeholder="you@university.edu" required>
+                    </div>
+                    <div class="form-row login-field">
+                        <label for="registerPassword">Password</label>
+                        <div class="password-wrap">
+                            <input id="registerPassword" type="password" placeholder="At least 8 characters" minlength="8" required>
+                            <button type="button" class="password-toggle" data-target="registerPassword" aria-label="Show password">Show</button>
+                        </div>
+                    </div>
+                    <div class="form-row login-field" id="registerMatricRow">
+                        <label for="registerMatric">Matric Number</label>
+                        <input id="registerMatric" type="text" placeholder="e.g. CSC/2020/045">
+                    </div>
+                    <div class="form-row login-field" id="registerRoleRow">
+                        <label for="registerRole">Role</label>
+                        <select id="registerRole" required>
+                            <option value="">Select role</option>
+                            <option value="Student">Student</option>
+                            <option value="Lecturer">Lecturer</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="primary-button">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <p class="support-note">
+            Need help? Contact support at
+            <a href="tel:+2349070530538">09070530538</a> or
+            <a href="mailto:oladejoenoch2025@gmail.com">oladejoenoch2025@gmail.com</a>
+        </p>
+    </section>
+
+    <!-- Main Portal App Section -->
+    <div id="appSection" class="hidden">
+        <section class="portal-header">
+            <div>
+                <p class="eyebrow">University Assignment Portal</p>
+                <h2>One platform for student submissions and lecturer grading.</h2>
+                <p id="userGreeting" class="user-greeting hidden"></p>
+            </div>
+            <div class="role-toggle top-tabs">
+                <button id="studentBtn" class="role-button active">Student Portal</button>
+                <button id="lecturerBtn" class="role-button">Lecturer Portal</button>
+                <button id="profileBtn" class="role-button">Profile</button>
+                <button id="adminBtn" class="role-button hidden">Admin</button>
+                <button id="logoutBtn" class="secondary-button logout-button hidden">Logout</button>
+            </div>
+        </section>
+
+        <main class="container">
+            <!-- Student Panel -->
+            <section id="student-panel" class="panel">
+                <form id="submissionForm" class="card form-card">
+                    <h3>Submit an Assignment</h3>
+                    <div class="form-row">
+                        <label for="studentName">Student Name</label>
+                        <input id="studentName" name="studentName" type="text" placeholder="Enter your full name" required readonly>
+                    </div>
+                    <div class="form-row">
+                        <label for="studentEmail">Email</label>
+                        <input id="studentEmail" name="studentEmail" type="email" placeholder="example@university.edu" required readonly>
+                    </div>
+                    <div class="form-row">
+                        <label for="courseName">Course / Module</label>
+                        <select id="courseName" name="courseName" required>
+                            <option value="">Select a course</option>
+                            <option value="CSC 419">CSC 419</option>
+                            <option value="CSC 333">CSC 333</option>
+                            <option value="CSC 305">CSC 305</option>
+                            <option value="CSC 271">CSC 271</option>
+                            <option value="CSC 332">CSC 332</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="assignmentSelect">Assignment</label>
+                        <select id="assignmentSelect" name="assignmentSelect" required disabled>
+                            <option value="">Select a course first</option>
+                        </select>
+                        <p id="assignmentDueHint" class="inline-form-note hidden"></p>
+                    </div>
+                    <div class="form-row">
+                        <label for="submissionFile">Upload PDF (Max 2MB)</label>
+                        <input id="submissionFile" name="submissionFile" type="file" accept="application/pdf" required>
+                    </div>
+                    <div class="form-row full-width">
+                        <label for="submissionNotes">Submission Notes</label>
+                        <textarea id="submissionNotes" name="submissionNotes" rows="4" placeholder="Write your submission summary or additional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="primary-button">Submit Assignment</button>
+                </form>
+
+                <section class="card status-card">
+                    <div class="panel-header">
+                        <h3>Your Submissions</h3>
+                        <p>Track status, grades, and feedback here.</p>
+                    </div>
+
+                    <div id="studentStatsBar" class="stats-bar">
+                        <div class="stat-pill">
+                            <span class="stat-value" id="studentStatTotal">0</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                        <div class="stat-pill stat-pending">
+                            <span class="stat-value" id="studentStatPending">0</span>
+                            <span class="stat-label">Pending</span>
+                        </div>
+                        <div class="stat-pill stat-graded">
+                            <span class="stat-value" id="studentStatGraded">0</span>
+                            <span class="stat-label">Graded</span>
+                        </div>
+                        <div class="stat-pill stat-late">
+                            <span class="stat-value" id="studentStatLate">0</span>
+                            <span class="stat-label">Late</span>
+                        </div>
+                    </div>
+
+                    <div id="studentSubmissions" class="submission-list"></div>
+                </section>
+            </section>
+
+            <!-- Lecturer Panel -->
+            <section id="lecturer-panel" class="panel hidden">
+                <section class="card">
+                    <div class="panel-header">
+                        <h3>Manage Assignments</h3>
+                        <p>Create assignments per course, each with its own deadline.</p>
+                    </div>
+                    <form id="assignmentForm" class="form-card">
+                        <div class="form-row">
+                            <label for="newAssignmentCourse">Course / Module</label>
+                            <select id="newAssignmentCourse" required>
+                                <option value="">Select a course</option>
+                                <option value="CSC 419">CSC 419</option>
+                                <option value="CSC 333">CSC 333</option>
+                                <option value="CSC 305">CSC 305</option>
+                                <option value="CSC 271">CSC 271</option>
+                                <option value="CSC 332">CSC 332</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="newAssignmentTitle">Assignment Title</label>
+                            <input id="newAssignmentTitle" type="text" placeholder="e.g. Project Proposal" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="newAssignmentDue">Due Date</label>
+                            <input id="newAssignmentDue" type="datetime-local">
+                        </div>
+                        <div class="form-row full-width">
+                            <label for="newAssignmentDescription">Description (optional)</label>
+                            <textarea id="newAssignmentDescription" rows="2" placeholder="Notes for students about this assignment..."></textarea>
+                        </div>
+                        <button type="submit" class="primary-button">Add Assignment</button>
+                    </form>
+                    <div id="assignmentManagerList" class="assignment-manager-list"></div>
+                </section>
+
+                <section class="card status-card">
+                    <div class="panel-header">
+                        <h3>Submissions Dashboard</h3>
+                        <p>Review student submissions, filter by module, and assign grades.</p>
+                    </div>
+
+                    <div class="dashboard-actions">
+                        <button type="button" id="exportGradesBtn" class="secondary-button">Download Grades (Excel)</button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div id="statsBar" class="stats-bar">
+                        <div class="stat-pill">
+                            <span class="stat-value" id="statTotal">0</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                        <div class="stat-pill stat-pending">
+                            <span class="stat-value" id="statPending">0</span>
+                            <span class="stat-label">Pending</span>
+                        </div>
+                        <div class="stat-pill stat-graded">
+                            <span class="stat-value" id="statGraded">0</span>
+                            <span class="stat-label">Graded</span>
+                        </div>
+                        <div class="stat-pill stat-late">
+                            <span class="stat-value" id="statLate">0</span>
+                            <span class="stat-label">Late</span>
+                        </div>
+                    </div>
+
+                    <!-- Filter Controls -->
+                    <div class="filter-toolbar">
+                        <input id="searchFilter" type="search" placeholder="Search by student, email, or title..." class="search-input">
+                        <select id="courseFilter">
+                            <option value="">All Courses</option>
+                            <option value="CSC 419">CSC 419</option>
+                            <option value="CSC 333">CSC 333</option>
+                            <option value="CSC 305">CSC 305</option>
+                            <option value="CSC 271">CSC 271</option>
+                            <option value="CSC 332">CSC 332</option>
+                        </select>
+                        <select id="statusFilter">
+                            <option value="">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Graded">Graded</option>
+                        </select>
+                        <select id="sortOrder">
+                            <option value="newest">Newest first</option>
+                            <option value="oldest">Oldest first</option>
+                            <option value="name">Student name (A-Z)</option>
+                        </select>
+                    </div>
+
+                    <div id="lecturerSubmissions" class="submission-list"></div>
+                </section>
+            </section>
+
+            <!-- Profile Panel -->
+            <section id="profile-panel" class="panel hidden">
+                <div class="profile-grid">
+                    <section class="card">
+                        <div class="panel-header">
+                            <h3>Your Profile</h3>
+                            <p>Account details tied to your session.</p>
+                        </div>
+                        <div id="profileSummary" class="profile-summary"></div>
+                    </section>
+
+                    <section class="card">
+                        <div class="panel-header">
+                            <h3>Update Profile</h3>
+                            <p>Change your display name or password.</p>
+                        </div>
+                        <form id="profileForm" class="form-card">
+                            <div class="form-row">
+                                <label for="profileFullName">Full Name</label>
+                                <input id="profileFullName" type="text" required>
+                            </div>
+                            <div class="form-row">
+                                <label for="profileCurrentPassword">Current Password</label>
+                                <div class="password-wrap">
+                                    <input id="profileCurrentPassword" type="password" placeholder="Required only to change password">
+                                    <button type="button" class="password-toggle" data-target="profileCurrentPassword" aria-label="Show password">Show</button>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label for="profileNewPassword">New Password</label>
+                                <div class="password-wrap">
+                                    <input id="profileNewPassword" type="password" placeholder="Leave blank to keep current password" minlength="8">
+                                    <button type="button" class="password-toggle" data-target="profileNewPassword" aria-label="Show password">Show</button>
+                                </div>
+                            </div>
+                            <button type="submit" class="primary-button">Save Changes</button>
+                        </form>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Admin Panel -->
+            <section id="admin-panel" class="panel hidden">
+                <section class="card">
+                    <div class="panel-header">
+                        <h3>User Management</h3>
+                        <p>Promote, deactivate, or remove accounts.</p>
+                    </div>
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminUsersTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Your data is stored server-side in a SQLite database, not in the browser.</p>
+            <p class="support-note">
+                Need help? Contact support at
+                <a href="tel:+2349070530538">09070530538</a> or
+                <a href="mailto:oladejoenoch2025@gmail.com">oladejoenoch2025@gmail.com</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
